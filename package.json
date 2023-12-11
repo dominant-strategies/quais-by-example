@@ -1,0 +1,26 @@
+{
+  "name": "quais-by-example",
+  "version": "1.0.0",
+  "description": "A library of basic use-cases for the quais.js SDK.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dominant-strategies/quais-by-example.git"
+  },
+  "keywords": [
+    "quais"
+  ],
+  "author": "Juuddi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dominant-strategies/quais-by-example/issues"
+  },
+  "homepage": "https://github.com/dominant-strategies/quais-by-example#readme",
+  "dependencies": {
+    "quais": "^0.1.16",
+    "quais-polling": "^1.0.3"
+  }
+}
