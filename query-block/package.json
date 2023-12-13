@@ -1,0 +1,12 @@
+{
+	"name": "query-block",
+	"version": "0.0.1",
+	"description": "A basic example of querying block data with quais.",
+	"author": "Dominant Strategies Inc.",
+	"contributors": [
+		"Juuddi"
+	],
+	"dependencies": {
+		"quais": "^0.1.17"
+	}
+}

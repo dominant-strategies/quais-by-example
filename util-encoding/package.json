@@ -1,0 +1,12 @@
+{
+	"name": "util-encoding",
+	"version": "0.0.1",
+	"description": "A set of basic examples of quais encoding utils.",
+	"author": "Dominant Strategies Inc.",
+	"contributors": [
+		"Juuddi"
+	],
+	"dependencies": {
+		"quais": "^0.1.17"
+	}
+}

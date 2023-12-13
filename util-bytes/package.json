@@ -1,0 +1,12 @@
+{
+	"name": "util-bytes",
+	"version": "0.0.1",
+	"description": "A set of basics example of quais bytes utils.",
+	"author": "Dominant Strategies Inc.",
+	"contributors": [
+		"Juuddi"
+	],
+	"dependencies": {
+		"quais": "^0.1.17"
+	}
+}

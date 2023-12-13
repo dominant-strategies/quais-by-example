@@ -1,0 +1,12 @@
+{
+	"name": "query-balance",
+	"version": "0.0.1",
+	"description": "A basic example of querying address balance with quais.",
+	"author": "Dominant Strategies Inc.",
+	"contributors": [
+		"Juuddi"
+	],
+	"dependencies": {
+		"quais": "^0.1.17"
+	}
+}

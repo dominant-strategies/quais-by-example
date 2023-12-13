@@ -1,0 +1,13 @@
+{
+	"name": "contract-qrc721",
+	"version": "0.0.1",
+	"description": "A basic example of deploying and linking QRC721 contracts.",
+	"author": "Dominant Strategies Inc.",
+	"contributors": [
+		"Juuddi"
+	],
+	"dependencies": {
+		"quais": "^0.1.17",
+		"quais-polling": "^1.0.3"
+	}
+}
