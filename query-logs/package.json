@@ -1,0 +1,12 @@
+{
+	"name": "query-logs",
+	"version": "0.0.1",
+	"description": "A basic example of query for logs with quais.",
+	"author": "Dominant Strategies Inc.",
+	"contributors": [
+		"Juuddi"
+	],
+	"dependencies": {
+		"quais": "^0.1.17"
+	}
+}

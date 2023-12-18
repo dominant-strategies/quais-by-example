@@ -139,12 +139,12 @@ contract QRC721 is IERC721Errors {
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    constructor() {
-        _name = "Quai Cross-Chain NFT";
-        _symbol = "QXC";
+    constructor(string memory name_, string memory symbol_) {
+        _name = name_;
+        _symbol = symbol_;
         _deployer = msg.sender;
         _mint(_deployer, 0);
-        Ranges[0] = Range(0, 29);    // zone 0-0 // cyprus1                        
+        Ranges[0] = Range(0, 29); // zone 0-0 // cyprus1                        
         Ranges[1] = Range(30, 58); // zone 0-1 // cyprus2
         Ranges[2] = Range(59, 87); // zone 0-2 // cyprus3
         Ranges[3] = Range(88, 115); // zone 1-0 // paxos1
