@@ -1,3 +1,7 @@
+/*
+This script deploys a QRC20 token contract to multiple chains within Quai Network and links them together
+*/
+
 const { quais } = require('quais')
 const { pollFor } = require('quais-polling')
 

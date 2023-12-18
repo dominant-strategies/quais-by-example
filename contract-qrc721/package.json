@@ -8,6 +8,6 @@
 	],
 	"dependencies": {
 		"quais": "^0.1.17",
-		"quais-polling": "^1.0.3"
+		"quais-polling": "^1.0.4"
 	}
 }
