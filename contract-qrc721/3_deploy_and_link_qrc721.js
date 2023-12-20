@@ -24,7 +24,7 @@ const constructorArgs = {
 // Define chain and address configurations for deployment
 // NOTE: this is a relatively insecure method of storing private keys and should not be used in production
 // If you plan to use this in production, please load them from a secure environment variable or encrypted file
-const config = [
+const deployConfig = [
 	{
 		name: 'cyprus1',
 		rpcURL: 'https://rpc.cyprus1.colosseum.quaiscan.io',
@@ -73,11 +73,11 @@ const config = [
 ]
 
 const deployQRC721 = async (index) => {
-	console.log(`*** Deploying ${constructorArgs.name} on: ` + config[index].name + ' **')
+	console.log(`*** Deploying ${constructorArgs.name} on: ` + deployConfig[index].name + ' **')
 
 	// Configure provider and wallet for deploying on each chain
-	const provider = new quais.providers.JsonRpcProvider(config[index].rpcURL)
-	const wallet = new quais.Wallet(config[index].privKey, provider)
+	const provider = new quais.providers.JsonRpcProvider(deployConfig[index].rpcURL)
+	const wallet = new quais.Wallet(deployConfig[index].privKey, provider)
 
 	// Define contract instance
 	const QRC721 = new quais.ContractFactory(QRC721Json.abi, QRC721Json.bytecode, wallet)
@@ -90,15 +90,15 @@ const deployQRC721 = async (index) => {
 
 	// Add contract address to array for linking in the next section
 	contractAddresses.push(qrc721DeployReceipt.contractAddress)
-	console.log(`--- ${constructorArgs.name} token deployed on ${config[index].name} at ${qrc721DeployReceipt.contractAddress} ---\n`)
+	console.log(`--- ${constructorArgs.name} token deployed on ${deployConfig[index].name} at ${qrc721DeployReceipt.contractAddress} ---\n`)
 }
 
 const linkQRC721 = async (index) => {
-	console.log(`*** Linking ${constructorArgs.name} token on ${config[index].name} **`)
+	console.log(`*** Linking ${constructorArgs.name} token on ${deployConfig[index].name} **`)
 
 	// Configure provider and wallet for linking on each chain
-	const provider = new quais.providers.JsonRpcProvider(config[index].rpcURL)
-	const wallet = new quais.Wallet(config[index].privKey, provider)
+	const provider = new quais.providers.JsonRpcProvider(deployConfig[index].rpcURL)
+	const wallet = new quais.Wallet(deployConfig[index].privKey, provider)
 
 	// Define contract instance
 	const qrc721 = new quais.Contract(contractAddresses[index], QRC721Json.abi, wallet)
@@ -116,12 +116,12 @@ const linkQRC721 = async (index) => {
 
 	// Poll for transaction receipt and log transaction hash
 	const txReceipt = await pollFor(provider, 'getTransactionReceipt', [tx.hash], 1.5, 1)
-	console.log(`--- ${constructorArgs.name} token on ${config[index].name} linked with transaction hash ${txReceipt.transactionHash} ---\n`)
+	console.log(`--- ${constructorArgs.name} token on ${deployConfig[index].name} linked with transaction hash ${txReceipt.transactionHash} ---\n`)
 }
 
 const main = async () => {
 	// Deploy QRC721 to each chain specified in the config array
-	for (let i = 0; i < config.length; i++) {
+	for (let i = 0; i < deployConfig.length; i++) {
 		await deployQRC721(i)
 	}
 

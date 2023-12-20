@@ -2,8 +2,11 @@ const { quais } = require('quais')
 
 const QRC20Json = require('./contract/QRC20.json')
 
+// RPC endpoint to query for the chain the contract is deployed on
+const rpcURL = 'https://rpc.cyprus1.colosseum.quaiscan.io'
+
 // Create provider for wallet
-const provider = new quais.providers.JsonRpcProvider('https://rpc.cyprus1.colosseum.quaiscan.io')
+const provider = new quais.providers.JsonRpcProvider(rpcURL)
 
 // Define private key for wallet
 const privateKey = '0x0000000000000000000000000000000000000000000000000000000000000000' // replace with your private key

@@ -9,9 +9,9 @@ const { pollFor } = require('quais-polling')
 // NOTE: this is a relatively insecure method of storing private keys and should not be used in production
 // If you plan to use this in production, please load them from a secure environment variable or encrypted file
 const networkConfig = {
-	name: 'cyprus1',
-	rpcURL: 'https://rpc.cyprus1.colosseum.quaiscan.io',
-	privKey: '0x0000000000000000000000000000000000000000000000000000000000000000', // replace with your private key
+	name: 'cyprus1', // name of the chain your contract is deployed on (optional, just for logging purposes)
+	rpcURL: 'https://rpc.cyprus1.colosseum.quaiscan.io', // rpc endpoint for the chain your contract is deployed on
+	privKey: '0x0000000000000000000000000000000000000000000000000000000000000000', // private key of the address you want to send tokens from
 	contractAddress: '0x0000000000000000000000000000000000000000', // deployed contract address
 }
 
