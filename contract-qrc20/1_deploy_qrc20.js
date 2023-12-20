@@ -4,6 +4,8 @@ This script deploys a simple QRC20 token to a single chain within Quai Network
 
 const { quais } = require('quais')
 const { pollFor } = require('quais-polling')
+const dotenv = require('dotenv')
+dotenv.config({ path: '.env' })
 const QRC20Json = require('./contract/QRC20.json')
 
 // Define constructor arguments for token deployment (name, symbol, totalSupply)
@@ -13,15 +15,11 @@ const constructorArgs = {
 	totalSupply: 1000000000000,
 }
 
-/* 
--- Define chain and address configurations for deployment
-NOTE: this is a relatively insecure method of storing private keys and should not be used in production
-If you plan to use this in production, please load them from a secure environment variable or encrypted file
-*/
+// Define chain and address configurations for deployment
 const deployConfig = {
 	name: 'cyprus1', // name of the chain you want to deploy to (optional, just for logging purposes)
-	rpcURL: 'https://rpc.cyprus1.colosseum.quaiscan.io', // rpc endpoint for the chain you want to deploy to
-	privKey: '0x0000000000000000000000000000000000000000000000000000000000000000', // private key of the address you want to deploy from
+	rpcURL: process.env.CYPRUS1URL, // rpc endpoint for the chain you want to deploy to loaded from .env file
+	privKey: process.env.CYPRUS1PK, // private key of the address you want to deploy from loaded from .env file
 }
 
 // define provider and wallet for deployment

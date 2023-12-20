@@ -4,6 +4,8 @@ This script deploys a QRC721 token contract to multiple chains within Quai Netwo
 
 const { quais } = require('quais')
 const { pollFor } = require('quais-polling')
+const dotenv = require('dotenv')
+dotenv.config({ path: '.env' })
 
 // Import ABI
 const QRC721Json = require('./contract/QRC721.json')
@@ -21,54 +23,52 @@ const constructorArgs = {
 	totalSupply: 1000000000000, // note this will be the local total supply of the token on each chain you deploy to
 }
 
-// Define chain and address configurations for deployment
-// NOTE: this is a relatively insecure method of storing private keys and should not be used in production
-// If you plan to use this in production, please load them from a secure environment variable or encrypted file
+/// Define chain and address configurations for deployment, load sensitive data from .env file
 const deployConfig = [
 	{
 		name: 'cyprus1',
-		rpcURL: 'https://rpc.cyprus1.colosseum.quaiscan.io',
-		privKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
+		rpcURL: process.env.CYPRUS1URL,
+		privKey: process.env.CYPRUS1PK,
 	},
 	{
 		name: 'cyprus2',
-		rpcURL: 'https://rpc.cyprus2.colosseum.quaiscan.io',
-		privKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
+		rpcURL: process.env.CYPRUS2URL,
+		privKey: process.env.CYPRUS2PK,
 	},
 	{
 		name: 'cyprus3',
-		rpcURL: 'https://rpc.cyprus3.colosseum.quaiscan.io',
-		privKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
+		rpcURL: process.env.CYPRUS3URL,
+		privKey: process.env.CYPRUS3PK,
 	},
 	{
 		name: 'paxos1',
-		rpcURL: 'https://rpc.paxos1.colosseum.quaiscan.io',
-		privKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
+		rpcURL: process.env.PAXOS1URL,
+		privKey: process.env.PAXOS1PK,
 	},
 	{
 		name: 'paxos2',
-		rpcURL: 'https://rpc.paxos2.colosseum.quaiscan.io',
-		privKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
+		rpcURL: process.env.PAXOS2URL,
+		privKey: process.env.PAXOS2PK,
 	},
 	{
 		name: 'paxos3',
-		rpcURL: 'https://rpc.paxos3.colosseum.quaiscan.io',
-		privKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
+		rpcURL: process.env.PAXOS3URL,
+		privKey: process.env.PAXOS3PK,
 	},
 	{
 		name: 'hydra1',
-		rpcURL: 'https://rpc.hydra1.colosseum.quaiscan.io',
-		privKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
+		rpcURL: process.env.HYDRA1URL,
+		privKey: process.env.HYDRA1PK,
 	},
 	{
 		name: 'hydra2',
-		rpcURL: 'https://rpc.hydra2.colosseum.quaiscan.io',
-		privKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
+		rpcURL: process.env.HYDRA2URL,
+		privKey: process.env.HYDRA2PK,
 	},
 	{
 		name: 'hydra3',
-		rpcURL: 'https://rpc.hydra3.colosseum.quaiscan.io',
-		privKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
+		rpcURL: process.env.HYDRA3URL,
+		privKey: process.env.HYDRA3PK,
 	},
 ]
 
@@ -116,7 +116,9 @@ const linkQRC721 = async (index) => {
 
 	// Poll for transaction receipt and log transaction hash
 	const txReceipt = await pollFor(provider, 'getTransactionReceipt', [tx.hash], 1.5, 1)
-	console.log(`--- ${constructorArgs.name} token on ${deployConfig[index].name} linked with transaction hash ${txReceipt.transactionHash} ---\n`)
+	console.log(
+		`--- ${constructorArgs.name} token on ${deployConfig[index].name} linked with transaction hash ${txReceipt.transactionHash} ---\n`
+	)
 }
 
 const main = async () => {

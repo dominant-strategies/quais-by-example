@@ -1,8 +1,7 @@
 const { quais } = require('quais')
 const { pollFor } = require('quais-polling')
-
-// RPC endpoint to query for the chain the address is on
-const rpcURL = 'https://rpc.cyprus1.colosseum.quaiscan.io'
+const dotenv = require('dotenv')
+dotenv.config({ path: '.env' })
 
 // Define origin and destination accounts
 // Note: This example is for a same shard transaction (internal transaction). Both of the addresses should be in the same shard.
@@ -10,10 +9,10 @@ const fromAddress = '0x1077b8213a19e34c790da18a0a7ce723b074344d' // cyprus1
 const toAddress = '0x0a8d8036b058f11864bcb8e55f513c5d07ed5ca7' // cyprus1
 
 // Define private key for wallet
-const privateKey = '0x0000000000000000000000000000000000000000000000000000000000000000' // private key of fromAddress
+const privateKey = process.env.PRIVKEY // loaded from .env file
 
 // Create provider for wallet
-const provider = new quais.providers.JsonRpcProvider(rpcURL)
+const provider = new quais.providers.JsonRpcProvider(process.env.RPCURL) // loaded from .env file
 
 // Create wallet for transaction
 const wallet = new quais.Wallet(privateKey, provider)
