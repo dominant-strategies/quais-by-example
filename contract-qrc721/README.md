@@ -13,6 +13,7 @@ The example is comprised of 3 scripts:
 - [Node.js](https://nodejs.org/en/) - JavaScript runtime
 - [`quais`](https://www.npmjs.com/package/quais) - Quai JavaScript SDK
 - [`quais-polling`](https://www.npmjs.com/package/quais-polling) - polling provider for Quai
+- [`dotenv`](https://www.npmjs.com/package/dotenv) - environment variable loader
 
 ## Usage
 
@@ -20,6 +21,12 @@ To install dependencies, navigate to this directory (`quais-by-example/contract-
 
 ```bash
 npm install
+```
+
+Create a local `.env` file from the template `.env.example` and fill in the values:
+
+```bash
+cp .env.example .env
 ```
 
 Use nodejs to run any of the scripts in this example. For example:
@@ -47,8 +54,8 @@ const constructorArgs = {
 ```js
 const deployConfig = {
 	name: 'cyprus1',
-	rpcURL: 'https://rpc.cyprus1.colosseum.quaiscan.io',
-	privKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
+	rpcURL: process.env.CYPRUS1URL, // loaded from .env
+	privKey: process.env.CYPRUS1PK, // loaded from .env
 }
 ```
 
@@ -64,8 +71,8 @@ This script builds a transaction to send tokens from a specified address to anot
 
 To configure the send, you'll need to provide the following:
 
-- `rpcURL` - the RPC URL of the chain you want to send the transaction on
-- `privKey` - the private key of the address you want to send the transaction from
+- `rpcURL` - the RPC URL of the chain you want to send the transaction on loaded from .env
+- `privKey` - the private key of the address you want to send the transaction from loaded from .env
 - `contractAddress` - the address of the QRC721 token contract you want to interact with
 - `toAddress` - the address you want to send tokens to
 

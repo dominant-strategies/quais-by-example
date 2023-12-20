@@ -16,6 +16,12 @@ To install dependencies, navigate to this directory (`quais-by-example/send-etx`
 npm install
 ```
 
+Create a local `.env` file from the template `.env.example` and fill in the values:
+
+```bash
+cp .env.example .env
+```
+
 Use nodejs to run the example script:
 
 ```bash
@@ -26,8 +32,8 @@ node index.js
 
 The `index.js` script requires a few variables to be set before it can run properly:
 
-- `rpcURL` - the RPC URL of the chain you want to send from
-- `privateKey` - the private key of the address you want to send from
+- `rpcURL` - the RPC URL of the chain you want to send from, loaded from your .env file
+- `privateKey` - the private key of the address you want to send from, loaded from your .env file
 - `desintationAddress` - the address you want to send to
 
 Once you've set each of these variables, you can run the script with:

@@ -1,11 +1,13 @@
 const { quais } = require('quais')
 const { pollFor } = require('quais-polling')
+const dotenv = require('dotenv')
+dotenv.config({ path: '.env' })
 
 // Define provider
-const provider = new quais.providers.JsonRpcProvider('http://rpc.cyprus1.colosseum.quaiscan.io')
+const provider = new quais.providers.JsonRpcProvider(process.env.RPCURL)
 
 // Define private key for wallet to send from
-const privKey = '0x7800a20e29ba736fd476eb89e2ceadd2afc231fe53e8d016b5d16d8c8274bc80'
+const privKey = process.env.PRIVKEY
 
 // Define wallet
 const wallet = new quais.Wallet(privKey, provider)

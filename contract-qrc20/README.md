@@ -20,6 +20,12 @@ To install dependencies, navigate to this directory (`quais-by-example/contract-
 npm install
 ```
 
+Create a local `.env` file from the template `.env.example` and fill in the values:
+
+```bash
+cp .env.example .env
+```
+
 Use nodejs to run any of the scripts in this example. For example:
 
 ```bash
@@ -46,8 +52,8 @@ const constructorArgs = {
 ```js
 const deployConfig = {
 	name: 'cyprus1',
-	rpcURL: 'https://rpc.cyprus1.colosseum.quaiscan.io',
-	privKey: '0x0000000000000000000000000000000000000000000000000000000000000000',
+	rpcURL: process.env.CYPRUS1URL, // loaded from .env
+	privKey: process.env.CYPRUS1PK, // loaded from .env
 }
 ```
 

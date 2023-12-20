@@ -4,14 +4,14 @@ This script transfers QRC20 tokens from one account to another on a single chain
 
 const quais = require('quais')
 const { pollFor } = require('quais-polling')
+const dotenv = require('dotenv')
+dotenv.config({ path: '.env' })
 
 // Define chain and address configurations for deployment
-// NOTE: this is a relatively insecure method of storing private keys and should not be used in production
-// If you plan to use this in production, please load them from a secure environment variable or encrypted file
 const networkConfig = {
 	name: 'cyprus1', // name of the chain your contract is deployed on (optional, just for logging purposes)
-	rpcURL: 'https://rpc.cyprus1.colosseum.quaiscan.io', // rpc endpoint for the chain your contract is deployed on
-	privKey: '0x0000000000000000000000000000000000000000000000000000000000000000', // private key of the address you want to send tokens from
+	rpcURL: process.env.CYPRUS1URL, // rpc endpoint for the chain you want to deploy to loaded from .env file
+	privKey: process.env.CYPRUS1PK, // private key of the address you want to deploy from loaded from .env file
 	contractAddress: '0x0000000000000000000000000000000000000000', // deployed contract address
 }
 

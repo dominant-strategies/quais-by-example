@@ -1,15 +1,13 @@
 const { quais } = require('quais')
-
+const dotenv = require('dotenv')
+dotenv.config({ path: '.env' })
 const QRC20Json = require('./contract/QRC20.json')
 
-// RPC endpoint to query for the chain the contract is deployed on
-const rpcURL = 'https://rpc.cyprus1.colosseum.quaiscan.io'
-
 // Create provider for wallet
-const provider = new quais.providers.JsonRpcProvider(rpcURL)
+const provider = new quais.providers.JsonRpcProvider(process.env.RPCURL) // loaded from .env file
 
 // Define private key for wallet
-const privateKey = '0x0000000000000000000000000000000000000000000000000000000000000000' // replace with your private key
+const privateKey = process.env.PRIVKEY // loaded from .env file
 
 // Create wallet for contractFactory
 const wallet = new quais.Wallet(privateKey, provider)
