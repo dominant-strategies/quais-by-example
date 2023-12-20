@@ -1,10 +1,13 @@
 const { quais } = require('quais')
 
-// Create provider to query against
-const provider = new quais.providers.JsonRpcProvider(`https://rpc.cyprus1.colosseum.quaiscan.io`)
+// RPC endpoint to query for the chain the block was mined on
+const rpcURL = 'https://rpc.cyprus1.colosseum.quaiscan.io'
 
-// Block number to query
+// hex string block number to query
 const blockNumber = '0x1234'
+
+// Create provider to query against
+const provider = new quais.providers.JsonRpcProvider(rpcURL)
 
 const main = async () => {
 	// get simplified block data (pass the second argument as true)

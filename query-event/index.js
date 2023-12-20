@@ -1,8 +1,11 @@
 const { quais } = require('quais')
 const QRC20Json = require('./contract/QRC20.json')
 
+// RPC endpoint to query for the chain the contract is deployed on
+const rpcURL = 'https://rpc.cyprus1.colosseum.quaiscan.io'
+
 // define provider
-const provider = new quais.providers.JsonRpcProvider('https://rpc.cyprus1.colosseum.quaiscan.io')
+const provider = new quais.providers.JsonRpcProvider(rpcURL)
 
 // set contract address we want to events from
 const contractAddress = '0x0dcb6cc8516568104758705b8320924cdca5bd44'
