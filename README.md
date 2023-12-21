@@ -69,4 +69,4 @@ This repository has four main categories of examples:
 - [contract-qrc721](./contract-qrc721/) - deploy, interact, and multi-chain deploy a QRC721 token
   - [1_deploy_qrc721.js](./contract-qrc721/1_deploy_qrc721.js) - deploy a QRC721 token
   - [2_interact_qrc721.js](./contract-qrc721/2_interact_qrc721.js) - interact with a QRC721 token
-  - [3_deploy_and_link_qrc721.js](./contract-qrc721/3_deploy_qrc721_multi.js) - multi-chain deploy a QRC721 token
+  - [3_deploy_and_link_qrc721.js](./contract-qrc721/3_deploy_and_link_qrc721.js) - multi-chain deploy a QRC721 token
