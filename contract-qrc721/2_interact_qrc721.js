@@ -29,20 +29,12 @@ const transferQRC721 = async () => {
 	// Indicate transfer has started
 	console.log(`Transferring tokenId ${tokenId} to: ` + toAddress)
 
-	// Build transfer transaction
-	const transactionData = await qrc721.populateTransaction.safeTransferFrom(fromAddress, toAddress, tokenId)
-
-	// Send linking transaction
-	const tx = await wallet.sendTransaction({
-		to: transactionData.to,
-		from: transactionData.from,
-		data: transactionData.data,
-		gasLimit: 1000000,
-	})
+	// Transfer token
+	const transaction = await qrc721.safeTransferFrom(fromAddress, toAddress, tokenId)
 
 	// Poll for transaction receipt and log transaction hash
 	const txReceipt = await pollFor(provider, 'getTransactionReceipt', [tx.hash], 1.5, 1)
-	console.log('Transaction hash: ' + txReceipt.transactionHash)
+	console.log('Transaction hash: ' + transaction.transactionHash)
 }
 
 transferQRC721()

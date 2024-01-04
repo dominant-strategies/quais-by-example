@@ -28,20 +28,20 @@ const transferQRC20 = async () => {
 	// Indicate transfer has started
 	console.log(`Transferring ${amount} tokens to: ` + toAddress)
 
-	// Build transfer transaction
-	const transactionData = await qrc20.populateTransaction.Transfer(toAddress, amount)
+	// Get wallet balance before transfer
+	const balanceBefore = await qrc20.balanceOf(wallet.address)
+	console.log(`Balance before transfer: ${balanceBefore}`)
 
-	// Send linking transaction
-	const tx = await wallet.sendTransaction({
-		to: transactionData.to,
-		from: transactionData.from,
-		data: transactionData.data,
-		gasLimit: 1000000,
-	})
+	// Transfer tokens
+	const transaction = await qrc20.Transfer(toAddress, amount)
 
 	// Poll for transaction receipt and log transaction hash
 	const txReceipt = await pollFor(provider, 'getTransactionReceipt', [tx.hash], 1.5, 1)
-	console.log('Transaction hash: ' + txReceipt.transactionHash)
+	console.log('Transaction hash: ' + transaction.transactionHash)
+
+	// Get wallet balance after transfer
+	const balanceAfter = await qrc20.balanceOf(wallet.address)
+	console.log(`Balance after transfer: ${balanceAfter}`)
 }
 
 transferQRC20()
