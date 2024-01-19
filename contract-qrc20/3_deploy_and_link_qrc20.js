@@ -4,6 +4,8 @@ This script deploys a QRC20 token contract to multiple chains within Quai Networ
 
 const { quais } = require('quais')
 const { pollFor } = require('quais-polling')
+const dotenv = require('dotenv')
+dotenv.config({ path: '.env' })
 
 // Import ABI
 const QRC20Json = require('./contract/QRC20.json')
