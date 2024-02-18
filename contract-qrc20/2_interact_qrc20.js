@@ -36,8 +36,8 @@ const transferQRC20 = async () => {
 	const transaction = await qrc20.Transfer(toAddress, amount)
 
 	// Poll for transaction receipt and log transaction hash
-	const txReceipt = await pollFor(provider, 'getTransactionReceipt', [tx.hash], 1.5, 1)
-	console.log('Transaction hash: ' + transaction.transactionHash)
+	const txReceipt = await pollFor(provider, 'getTransactionReceipt', [transaction.hash], 1.5, 1)
+	console.log('Transaction hash: ' + txReceipt.transactionHash)
 
 	// Get wallet balance after transfer
 	const balanceAfter = await qrc20.balanceOf(wallet.address)
