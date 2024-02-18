@@ -33,8 +33,8 @@ const transferQRC721 = async () => {
 	const transaction = await qrc721.safeTransferFrom(fromAddress, toAddress, tokenId)
 
 	// Poll for transaction receipt and log transaction hash
-	const txReceipt = await pollFor(provider, 'getTransactionReceipt', [tx.hash], 1.5, 1)
-	console.log('Transaction hash: ' + transaction.transactionHash)
+	const txReceipt = await pollFor(provider, 'getTransactionReceipt', [transaction.hash], 1.5, 1)
+	console.log('Transaction hash: ' + txReceipt.transactionHash)
 }
 
 transferQRC721()
