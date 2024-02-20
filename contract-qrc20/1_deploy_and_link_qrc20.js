@@ -1,5 +1,5 @@
 /*
-This script deploys a QRC721 token contract to multiple chains within Quai Network and links them together
+This script deploys a QRC20 token contract to multiple chains within Quai Network and links them together
 */
 
 const { quais } = require('quais')
@@ -8,7 +8,7 @@ const dotenv = require('dotenv')
 dotenv.config({ path: '.env' })
 
 // Import ABI
-const QRC721Json = require('./contract/QRC721.json')
+const QRC20Json = require('./contract/QRC20.json')
 
 // Initialize array to store contract addresses after deployment for linking
 const contractAddresses = []
@@ -18,12 +18,12 @@ const chainIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
 // Define constructor arguments for token deployment (name, symbol, totalSupply)
 const constructorArgs = {
-	name: 'Quai Token',
-	symbol: 'QUAI',
+	name: 'Test QRC20 Token',
+	symbol: 'TQ20',
 	totalSupply: 1000000000000, // note this will be the local total supply of the token on each chain you deploy to
 }
 
-/// Define chain and address configurations for deployment, load sensitive data from .env file
+// Define chain and address configurations for deployment, load sensitive data from .env file
 const deployConfig = [
 	{
 		name: 'cyprus1',
@@ -72,7 +72,7 @@ const deployConfig = [
 	},
 ]
 
-const deployQRC721 = async (index) => {
+const deployQRC20 = async (index) => {
 	console.log(`*** Deploying ${constructorArgs.name} on: ` + deployConfig[index].name + ' **')
 
 	// Configure provider and wallet for deploying on each chain
@@ -80,20 +80,20 @@ const deployQRC721 = async (index) => {
 	const wallet = new quais.Wallet(deployConfig[index].privKey, provider)
 
 	// Define contract instance
-	const QRC721 = new quais.ContractFactory(QRC721Json.abi, QRC721Json.bytecode, wallet)
+	const QRC20 = new quais.ContractFactory(QRC20Json.abi, QRC20Json.bytecode, wallet)
 
 	// Deploy contract with constructor arguments specified above
-	const qrc721 = await QRC721.deploy(constructorArgs.name, constructorArgs.symbol, constructorArgs.totalSupply, { gasLimit: 5000000 })
+	const qrc20 = await QRC20.deploy(constructorArgs.name, constructorArgs.symbol, constructorArgs.totalSupply, { gasLimit: 5000000 })
 
 	// Poll for transaction receipt and log contract address
-	const qrc721DeployReceipt = await pollFor(provider, 'getTransactionReceipt', [qrc721.deployTransaction.hash], 1.5, 1)
+	const qrc20DeployReceipt = await pollFor(provider, 'getTransactionReceipt', [qrc20.deployTransaction.hash], 1.5, 1)
 
 	// Add contract address to array for linking in the next section
-	contractAddresses.push(qrc721DeployReceipt.contractAddress)
-	console.log(`--- ${constructorArgs.name} token deployed on ${deployConfig[index].name} at ${qrc721DeployReceipt.contractAddress} ---\n`)
+	contractAddresses.push(qrc20DeployReceipt.contractAddress)
+	console.log(`--- ${constructorArgs.name} token deployed on ${deployConfig[index].name} at ${qrc20DeployReceipt.contractAddress} ---\n`)
 }
 
-const linkQRC721 = async (index) => {
+const linkQRC20 = async (index) => {
 	console.log(`*** Linking ${constructorArgs.name} token on ${deployConfig[index].name} **`)
 
 	// Configure provider and wallet for linking on each chain
@@ -101,10 +101,10 @@ const linkQRC721 = async (index) => {
 	const wallet = new quais.Wallet(deployConfig[index].privKey, provider)
 
 	// Define contract instance
-	const qrc721 = new quais.Contract(contractAddresses[index], QRC721Json.abi, wallet)
+	const qrc20 = new quais.Contract(contractAddresses[index], QRC20Json.abi, wallet)
 
 	// Build contract linking transaction
-	const transactionData = await qrc721.populateTransaction.AddApprovedAddresses(chainIndexes, contractAddresses)
+	const transactionData = await qrc20.populateTransaction.AddApprovedAddresses(chainIndexes, contractAddresses)
 
 	// Send linking transaction
 	const tx = await wallet.sendTransaction({
@@ -122,14 +122,14 @@ const linkQRC721 = async (index) => {
 }
 
 const main = async () => {
-	// Deploy QRC721 to each chain specified in the config array
+	// Deploy QRC20 to each chain specified in the config array
 	for (let i = 0; i < deployConfig.length; i++) {
-		await deployQRC721(i)
+		await deployQRC20(i)
 	}
 
-	// Link deployed QRC721 contracts on specified chains
+	// Link deployed QRC20 contracts on specified chains
 	for (let i = 0; i < contractAddresses.length; i++) {
-		await linkQRC721(i)
+		await linkQRC20(i)
 	}
 
 	// Log deployed contract addresses

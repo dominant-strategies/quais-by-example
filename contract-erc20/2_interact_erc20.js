@@ -1,14 +1,14 @@
 /*
-This script transfers a QRC721 token from one account to another on a single chain
+This script transfers ERC20 tokens from one account to another on a single chain
 */
 
-const quais = require('quais')
 const { pollFor } = require('quais-polling')
+const quais = require('quais')
 const dotenv = require('dotenv')
 dotenv.config({ path: '.env' })
 
 // Import ABI
-const QRC721Json = require('./contract/QRC721.json')
+const ERC20Json = require('./contract/ERC20.json')
 
 // Define chain and address configurations for deployment
 const networkConfig = {
@@ -18,26 +18,42 @@ const networkConfig = {
 	contractAddress: '0x0000000000000000000000000000000000000000', // deployed contract address
 }
 
-// define provider, wallet, and contract
+// Define provider, wallet, and contract
 const provider = new quais.providers.JsonRpcProvider(networkConfig.rpcURL)
 const wallet = new quais.Wallet(networkConfig.privKey, provider)
-const qrc721 = new quais.Contract(networkConfig.contractAddress, QRC721Json.abi, wallet) // deployed contract instance
+const erc20 = new quais.Contract(networkConfig.contractAddress, ERC20Json.abi, wallet) // deployed contract instance
 
 // Define transaction data
-const fromAddress = wallet.address
 const toAddress = '0x0000000000000000000000000000000000000000' // replace with the address you want to transfer tokens to
-const tokenId = 1 // replace with the tokenId you want to transfer
+const amount = quais.utils.parseEther('1') // replace with the amount of tokens you want to transfer
 
-const transferQRC721 = async () => {
+// Get address shards
+const fromShard = quais.utils.getShardFromAddress(wallet.address)
+const toShard = quais.utils.getShardFromAddress(toAddress)
+
+const transferERC20 = async () => {
+	if (fromShard !== toShard) {
+		console.log('Cross-shard transfer not supported')
+		return
+	}
+
 	// Indicate transfer has started
-	console.log(`Transferring tokenId ${tokenId} to: ` + toAddress)
+	console.log(`Transferring ${amount} tokens to: ` + toAddress)
 
-	// Transfer token
-	const tx = await qrc721.safeTransferFrom(fromAddress, toAddress, tokenId)
+	// Get wallet balance before transfer
+	const balanceBefore = await erc20.balanceOf(wallet.address)
+	console.log(`Balance before transfer: ${balanceBefore}`)
+
+	// Transfer tokens
+	const tx = await erc20.transfer(toAddress, amount)
 
 	// Poll for transaction receipt and log transaction hash
 	const txReceipt = await pollFor(provider, 'getTransactionReceipt', [tx.hash], 1.5, 1)
 	console.log('Transaction hash: ' + txReceipt.transactionHash)
+
+	// Get wallet balance after transfer
+	const balanceAfter = await erc20.balanceOf(wallet.address)
+	console.log(`Balance after transfer: ${balanceAfter}`)
 }
 
-transferQRC721()
+transferERC20()

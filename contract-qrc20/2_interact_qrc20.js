@@ -2,10 +2,13 @@
 This script transfers QRC20 tokens from one account to another on a single chain
 */
 
-const quais = require('quais')
 const { pollFor } = require('quais-polling')
+const quais = require('quais')
 const dotenv = require('dotenv')
 dotenv.config({ path: '.env' })
+
+// Import ABI
+const QRC20Json = require('./contract/QRC20.json')
 
 // Define chain and address configurations for deployment
 const networkConfig = {
@@ -21,8 +24,8 @@ const wallet = new quais.Wallet(networkConfig.privKey, provider)
 const qrc20 = new quais.Contract(networkConfig.contractAddress, QRC20Json.abi, wallet) // deployed contract instance
 
 // Define transaction data
-const toAddress = '0x0000000000000000000000000000000000000000' // replace with the address you want to transfer tokens to
-const amount = 10 // replace with the amount of tokens you want to transfer
+const toAddress = '0x0000000000000000000000000000000000000000' // replace with the address you want to transfer tokens to (any shard)
+const amount = quais.utils.parseEther('1') // replace with the amount of tokens you want to transfer
 
 const transferQRC20 = async () => {
 	// Indicate transfer has started
@@ -32,12 +35,12 @@ const transferQRC20 = async () => {
 	const balanceBefore = await qrc20.balanceOf(wallet.address)
 	console.log(`Balance before transfer: ${balanceBefore}`)
 
-	// Transfer tokens
-	const transaction = await qrc20.Transfer(toAddress, amount)
+	// Transfer tokens -- will initiate an external transaction if recipient is on a different shard
+	const tx = await qrc20.transfer(toAddress, amount)
 
 	// Poll for transaction receipt and log transaction hash
 	const txReceipt = await pollFor(provider, 'getTransactionReceipt', [tx.hash], 1.5, 1)
-	console.log('Transaction hash: ' + transaction.transactionHash)
+	console.log('Transaction hash: ' + txReceipt.transactionHash)
 
 	// Get wallet balance after transfer
 	const balanceAfter = await qrc20.balanceOf(wallet.address)

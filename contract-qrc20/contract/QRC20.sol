@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0; // Note: You must have a version of SolidityX to compile this contract.
+pragma solidity ^0.8.19; // Note: You must have a version of SolidityX to compile this contract.
 
 /**
  * @dev Implementation of the {IERC20} interface for cross-chain transfers.
@@ -116,7 +116,7 @@ contract QRC20 {
      * no way affects any of the arithmetic of the contract, including
      * {IERC20-balanceOf} and {IERC20-transfer}.
      */
-    function decimals() public view  returns (uint8) {
+    function decimals() public pure  returns (uint8) {
         return 18;
     }
 
@@ -482,23 +482,6 @@ contract QRC20 {
         address to,
         uint256 amount
     ) internal  {}
-
-    /**
-    * This function allows the deployer to add an external address for the token contract on a different chain.
-    * Note that the deployer can only add one address per chain and this address cannot be changed afterwards.
-    * Be very careful when adding an address here.
-    */
-    function AddApprovedAddress(uint8 chain, address addr) public {
-        bool isInternal;
-        assembly {
-            isInternal := isaddrinternal(addr)
-        }
-        require(!isInternal, "Address is not external");
-        require(msg.sender == _deployer, "Sender is not deployer");
-        require(chain < 9, "Max 9 zones");
-        require(ApprovedAddresses[chain] == address(0), "The approved address for this zone already exists");
-        ApprovedAddresses[chain] = addr;
-    }
 
     /**
     * This function allows the deployer to add external addresses for the token contract on different chains.
