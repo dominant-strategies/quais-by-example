@@ -1,5 +1,5 @@
 /*
-This script transfers a QRC721 token from one account to another on a single chain
+This script transfers a ERC721 token from one account to another on a single chain
 */
 
 const quais = require('quais')
@@ -8,7 +8,7 @@ const dotenv = require('dotenv')
 dotenv.config({ path: '.env' })
 
 // Import ABI
-const QRC721Json = require('./contract/QRC721.json')
+const ERC721Json = require('./contract/ERC721.json')
 
 // Define chain and address configurations for deployment
 const networkConfig = {
@@ -21,23 +21,23 @@ const networkConfig = {
 // define provider, wallet, and contract
 const provider = new quais.providers.JsonRpcProvider(networkConfig.rpcURL)
 const wallet = new quais.Wallet(networkConfig.privKey, provider)
-const qrc721 = new quais.Contract(networkConfig.contractAddress, QRC721Json.abi, wallet) // deployed contract instance
+const erc721 = new quais.Contract(networkConfig.contractAddress, ERC721Json.abi, wallet) // deployed contract instance
 
 // Define transaction data
 const fromAddress = wallet.address
 const toAddress = '0x0000000000000000000000000000000000000000' // replace with the address you want to transfer tokens to
 const tokenId = 1 // replace with the tokenId you want to transfer
 
-const transferQRC721 = async () => {
+const transferERC721 = async () => {
 	// Indicate transfer has started
 	console.log(`Transferring tokenId ${tokenId} to: ` + toAddress)
 
 	// Transfer token
-	const tx = await qrc721.safeTransferFrom(fromAddress, toAddress, tokenId)
+	const tx = await erc721.safeTransferFrom(fromAddress, toAddress, tokenId)
 
 	// Poll for transaction receipt and log transaction hash
 	const txReceipt = await pollFor(provider, 'getTransactionReceipt', [tx.hash], 1.5, 1)
 	console.log('Transaction hash: ' + txReceipt.transactionHash)
 }
 
-transferQRC721()
+transferERC721()

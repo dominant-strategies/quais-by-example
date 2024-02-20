@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.19;
 
 /**
  * @dev Standard ERC721 Errors
@@ -11,7 +11,7 @@ interface IERC721Errors {
      * @dev Indicates that an address can't be an owner. For example, `address(0)` is a forbidden owner in EIP-20.
      * Used in balance queries.
      * @param owner Address of the current owner of a token.
-     */
+    */
     error ERC721InvalidOwner(address owner);
 
     /**
@@ -97,6 +97,9 @@ contract QRC721 is IERC721Errors {
     // Token symbol
     string private _symbol;
 
+    // Base URI
+    string private baseURI;
+
     address private _deployer;
 
     // List of external token contracts that can send tokens to users on this chain
@@ -139,12 +142,13 @@ contract QRC721 is IERC721Errors {
     /**
      * @dev Initializes the contract by setting a `name` and a `symbol` to the token collection.
      */
-    constructor(string memory name_, string memory symbol_) {
+    constructor(string memory name_, string memory symbol_, string memory baseURI_) {
         _name = name_;
         _symbol = symbol_;
+        baseURI = baseURI_;
         _deployer = msg.sender;
         _mint(_deployer, 0);
-        Ranges[0] = Range(0, 29); // zone 0-0 // cyprus1                        
+        Ranges[0] = Range(0, 29);    // zone 0-0 // cyprus1                        
         Ranges[1] = Range(30, 58); // zone 0-1 // cyprus2
         Ranges[2] = Range(59, 87); // zone 0-2 // cyprus3
         Ranges[3] = Range(88, 115); // zone 1-0 // paxos1
@@ -206,7 +210,7 @@ contract QRC721 is IERC721Errors {
      * by default, can be overridden in child contracts.
      */
     function _baseURI() internal view  returns (string memory) {
-        return "https://qu.ai/nft/";
+        return baseURI;
     }
 
     /**
@@ -626,21 +630,21 @@ contract QRC721 is IERC721Errors {
         }
     }
 
-     /**
-    * This function allows the deployer to add an external address for the token contract on a different chain.
+    /**
+    * This function allows the deployer to add external addresses for the token contract on different chains.
     * Note that the deployer can only add one address per chain and this address cannot be changed afterwards.
-    * Be very careful when adding an address here.
+    * In comparison to AddApprovedAddress, this function allows the address(es) to be internal so that the same
+    * approved list can be used for every instance of the contract on each chain.
+    * Be very careful when adding addresses here.
     */
-    function AddApprovedAddress(uint8 chain, address addr) public {
-        bool isInternal;
-        assembly {
-            isInternal := isaddrinternal(addr)
-        }
-        require(!isInternal, "Address is not external");
+    function AddApprovedAddresses(uint8[] calldata chain, address[] calldata addr) external {
         require(msg.sender == _deployer, "Sender is not deployer");
-        require(chain < 9, "Max 9 zones");
-        require(ApprovedAddresses[chain] == address(0), "The approved address for this zone already exists");
-        ApprovedAddresses[chain] = addr;
+        require(chain.length == addr.length, "chain and address arrays must be the same length");
+        for(uint8 i = 0; i < chain.length; i++) {
+            require(chain[i] < 9, "Max 9 zones");
+            require(ApprovedAddresses[chain[i]] == address(0), "The approved address for this zone already exists");
+            ApprovedAddresses[chain[i]] = addr[i];
+        }
     }
 
     // This function uses the stored prefix list to determine an address's location based on its first byte.
