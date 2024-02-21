@@ -5,7 +5,7 @@ This example shows how to **multi-chain deploy and interact with a QRC721 contra
 The example is comprised of 2 scripts:
 
 - [1_deploy_and_link_qrc721.js](./1_deploy_and_link_qrc721.js) - multi-chain deploy a QRC20 contract and link all sister contracts
-- [2_interact_qrc721.js](./2_interact_qrc20.js) - send NFTs from one address to another (on any shard) using a QRC20 contract
+- [2_interact_qrc721.js](./2_interact_qrc721.js) - send NFTs from one address to another (on any shard) using a QRC20 contract
 
 ## Dependencies
 
@@ -65,7 +65,7 @@ Once the script completes, you'll have a fully linked network of QRC721 contract
 
 ### 2_interact_qrc721.js
 
-This script builds a transaction to send an NFT  from a specified address to another on a single chain. If you provide a toAddress on a different shard **and** you have not deployed a sister contract on that shard, the transaction will fail.
+This script builds a transaction to send an NFT from a specified address to another on a single chain. If you provide a toAddress on a different shard **and** you have not deployed a sister contract on that shard, the transaction will fail.
 
 To configure the send, you'll need to provide the following:
 

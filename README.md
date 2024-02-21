@@ -62,11 +62,15 @@ This repository has four main categories of examples:
 
 ### Contracts
 
+- [contract-erc20](./contract-erc20/) - deploy and interact with ERC20 token
+  - [1_deploy_erc20.js](./contract-erc20/1_deploy_erc20.js) - deploy a QRC20 token
+  - [2_interact_erc20.js](./contract-erc20/2_interact_erc20.js) - interact with a ERC20 token
+- [contract-erc721](./contract-qrc721/) - deploy and interact with a ERC721 token
+  - [1_deploy_erc721.js](./contract-erc721/1_deploy_erc721.js) - deploy a ERC721 token
+  - [2_interact_erc721.js](./contract-erc721/2_interact_erc721.js) - interact with a ERC721 token
 - [contract-qrc20](./contract-qrc20/) - deploy, interact, and multi-chain deploy a QRC20 token
-  - [1_deploy_qrc20.js](./contract-qrc20/1_deploy_qrc20.js) - deploy a QRC20 token
+  - [1_deploy_and_link_qrc20.js](./contract-qrc20/1_deploy_and_link_qrc20.js) - multi-chain deploy a QRC20 token
   - [2_interact_qrc20.js](./contract-qrc20/2_interact_qrc20.js) - interact with a QRC20 token
-  - [3_deploy_and_link_qrc20.js](./contract-qrc20/3_deploy_qrc20_multi.js) - multi-chain deploy a QRC20 token
 - [contract-qrc721](./contract-qrc721/) - deploy, interact, and multi-chain deploy a QRC721 token
-  - [1_deploy_qrc721.js](./contract-qrc721/1_deploy_qrc721.js) - deploy a QRC721 token
+  - [1_deploy_and_link_qrc721.js](./contract-qrc721/1_deploy_and_link_qrc721.js) - multi-chain deploy a QRC721 token
   - [2_interact_qrc721.js](./contract-qrc721/2_interact_qrc721.js) - interact with a QRC721 token
-  - [3_deploy_and_link_qrc721.js](./contract-qrc721/3_deploy_and_link_qrc721.js) - multi-chain deploy a QRC721 token
