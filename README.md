@@ -63,7 +63,7 @@ This repository has four main categories of examples:
 ### Contracts
 
 - [contract-erc20](./contract-erc20/) - deploy and interact with ERC20 token
-  - [1_deploy_erc20.js](./contract-erc20/1_deploy_erc20.js) - deploy a QRC20 token
+  - [1_deploy_erc20.js](./contract-erc20/1_deploy_erc20.js) - deploy a ERC20 token
   - [2_interact_erc20.js](./contract-erc20/2_interact_erc20.js) - interact with a ERC20 token
 - [contract-erc721](./contract-qrc721/) - deploy and interact with a ERC721 token
   - [1_deploy_erc721.js](./contract-erc721/1_deploy_erc721.js) - deploy a ERC721 token
