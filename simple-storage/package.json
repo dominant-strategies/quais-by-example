@@ -1,0 +1,15 @@
+{
+  "name": "contract-erc20",
+  "version": "0.0.1",
+  "description": "A basic example of deploying an ERC20 contract.",
+  "author": "Dominant Strategies Inc.",
+  "contributors": [
+    "Juuddi"
+  ],
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.1",
+    "dotenv": "^16.4.4",
+    "quais": "^1.0.0-alpha.6",
+    "quais-polling": "^1.0.4"
+  }
+}
